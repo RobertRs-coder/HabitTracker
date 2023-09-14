@@ -8,14 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		236F5BFB2AB1F364005DDACA /* HabitTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5BFA2AB1F364005DDACA /* HabitTrackerApp.swift */; };
-		236F5BFD2AB1F364005DDACA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5BFC2AB1F364005DDACA /* ContentView.swift */; };
+		236F5BFD2AB1F364005DDACA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5BFC2AB1F364005DDACA /* MainView.swift */; };
 		236F5BFF2AB1F365005DDACA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 236F5BFE2AB1F365005DDACA /* Assets.xcassets */; };
 		236F5C022AB1F365005DDACA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 236F5C012AB1F365005DDACA /* Preview Assets.xcassets */; };
 		236F5C042AB1F365005DDACA /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C032AB1F365005DDACA /* Persistence.swift */; };
-		236F5C072AB1F365005DDACA /* HabitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C052AB1F365005DDACA /* HabitTracker.xcdatamodeld */; };
 		236F5C112AB1F365005DDACA /* HabitTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C102AB1F365005DDACA /* HabitTrackerTests.swift */; };
 		236F5C1B2AB1F365005DDACA /* HabitTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C1A2AB1F365005DDACA /* HabitTrackerUITests.swift */; };
 		236F5C1D2AB1F365005DDACA /* HabitTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C1C2AB1F365005DDACA /* HabitTrackerUITestsLaunchTests.swift */; };
+		236F5C2B2AB1F4FA005DDACA /* HabitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C292AB1F4FA005DDACA /* HabitTracker.xcdatamodeld */; };
+		236F5C2F2AB1F9A2005DDACA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C2E2AB1F9A2005DDACA /* HomeView.swift */; };
+		236F5C312AB20359005DDACA /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C302AB20359005DDACA /* HabitViewModel.swift */; };
+		236F5C332AB21146005DDACA /* AddNewHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5C322AB21146005DDACA /* AddNewHabitView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,16 +41,19 @@
 /* Begin PBXFileReference section */
 		236F5BF72AB1F364005DDACA /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		236F5BFA2AB1F364005DDACA /* HabitTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerApp.swift; sourceTree = "<group>"; };
-		236F5BFC2AB1F364005DDACA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		236F5BFC2AB1F364005DDACA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		236F5BFE2AB1F365005DDACA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		236F5C012AB1F365005DDACA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		236F5C032AB1F365005DDACA /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		236F5C062AB1F365005DDACA /* HabitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabitTracker.xcdatamodel; sourceTree = "<group>"; };
 		236F5C0C2AB1F365005DDACA /* HabitTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HabitTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		236F5C102AB1F365005DDACA /* HabitTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerTests.swift; sourceTree = "<group>"; };
 		236F5C162AB1F365005DDACA /* HabitTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HabitTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		236F5C1A2AB1F365005DDACA /* HabitTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerUITests.swift; sourceTree = "<group>"; };
 		236F5C1C2AB1F365005DDACA /* HabitTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		236F5C2A2AB1F4FA005DDACA /* HabitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabitTracker.xcdatamodel; sourceTree = "<group>"; };
+		236F5C2E2AB1F9A2005DDACA /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		236F5C302AB20359005DDACA /* HabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewModel.swift; sourceTree = "<group>"; };
+		236F5C322AB21146005DDACA /* AddNewHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHabitView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +105,11 @@
 			isa = PBXGroup;
 			children = (
 				236F5BFA2AB1F364005DDACA /* HabitTrackerApp.swift */,
-				236F5BFC2AB1F364005DDACA /* ContentView.swift */,
-				236F5BFE2AB1F365005DDACA /* Assets.xcassets */,
+				236F5C2D2AB1F98C005DDACA /* ViewModel */,
+				236F5C2C2AB1F984005DDACA /* View */,
 				236F5C032AB1F365005DDACA /* Persistence.swift */,
-				236F5C052AB1F365005DDACA /* HabitTracker.xcdatamodeld */,
+				236F5C292AB1F4FA005DDACA /* HabitTracker.xcdatamodeld */,
+				236F5BFE2AB1F365005DDACA /* Assets.xcassets */,
 				236F5C002AB1F365005DDACA /* Preview Content */,
 			);
 			path = HabitTracker;
@@ -131,6 +138,24 @@
 				236F5C1C2AB1F365005DDACA /* HabitTrackerUITestsLaunchTests.swift */,
 			);
 			path = HabitTrackerUITests;
+			sourceTree = "<group>";
+		};
+		236F5C2C2AB1F984005DDACA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				236F5BFC2AB1F364005DDACA /* MainView.swift */,
+				236F5C2E2AB1F9A2005DDACA /* HomeView.swift */,
+				236F5C322AB21146005DDACA /* AddNewHabitView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		236F5C2D2AB1F98C005DDACA /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				236F5C302AB20359005DDACA /* HabitViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,9 +288,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				236F5C332AB21146005DDACA /* AddNewHabitView.swift in Sources */,
 				236F5C042AB1F365005DDACA /* Persistence.swift in Sources */,
-				236F5C072AB1F365005DDACA /* HabitTracker.xcdatamodeld in Sources */,
-				236F5BFD2AB1F364005DDACA /* ContentView.swift in Sources */,
+				236F5C2B2AB1F4FA005DDACA /* HabitTracker.xcdatamodeld in Sources */,
+				236F5BFD2AB1F364005DDACA /* MainView.swift in Sources */,
+				236F5C312AB20359005DDACA /* HabitViewModel.swift in Sources */,
+				236F5C2F2AB1F9A2005DDACA /* HomeView.swift in Sources */,
 				236F5BFB2AB1F364005DDACA /* HabitTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,14 +620,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		236F5C052AB1F365005DDACA /* HabitTracker.xcdatamodeld */ = {
+		236F5C292AB1F4FA005DDACA /* HabitTracker.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				236F5C062AB1F365005DDACA /* HabitTracker.xcdatamodel */,
+				236F5C2A2AB1F4FA005DDACA /* HabitTracker.xcdatamodel */,
 			);
-			currentVersion = 236F5C062AB1F365005DDACA /* HabitTracker.xcdatamodel */;
+			currentVersion = 236F5C2A2AB1F4FA005DDACA /* HabitTracker.xcdatamodel */;
 			path = HabitTracker.xcdatamodeld;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;
 		};
 /* End XCVersionGroup section */
