@@ -10,10 +10,6 @@ import SwiftUI
 struct AddNewHabitView: View {
     @EnvironmentObject var viewModel: HabitViewModel
     
-    @State private var icon = "l1.rectangle.roundedbottom"
-
-    @State private var isPresented = false
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -46,12 +42,103 @@ struct AddNewHabitView: View {
                 }
                 .padding(.vertical)
                 
+                Divider()
+                
+                // MARK: Frecuency selection
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Frecuency")
+                        .font(.callout.bold())
+                    let weekDays = Calendar.current.shortWeekdaySymbols
+                    HStack(spacing: 10) {
+                        ForEach(weekDays, id: \.self) { day in
+                            
+                            let index = viewModel.weekDays.firstIndex { value in
+                                return value == day
+                            } ?? -1 //No lo entiendo
+                            
+                            //MARK: Color frecuency selection
+                            Text(day)
+                                .fontWeight(.semibold)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 10,
+                                                     style: .continuous)
+                                    .fill(index != -1 ? Color(Color(viewModel.habitColor)).opacity(0.6) : Color("TFBG").opacity(0.6))
+                                    .brightness(0.2)
+                                }
+                                .onTapGesture {
+                                    withAnimation {
+                                        if index != -1 {
+                                            viewModel.weekDays.remove(at: index)
+                                        } else {
+                                            viewModel.weekDays.append(day)
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.top, 15)
+                }
+                
+                Divider ()
+                    .padding(.vertical, 10)
+                
+                //MARK: Reminder with toogle
+                HStack {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Reminder")
+                            .fontWeight(.semibold)
+                        
+                        Text("Just notification")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Toggle(isOn: $viewModel.isReminderOn) {
+                        //
+                    }
+                    .labelsHidden()
+                    
+                }
+                
+                //MARK: Reminders
+                HStack(spacing: 12) {
+                    Label {
+                        Text(viewModel.reminderDate.formatted(date: .omitted, time: .shortened))
+                    } icon: {
+                        Image(systemName: "clock")
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 12)
+                    .background(Color("TFBG").opacity(0.6),
+                                in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                    .brightness(0.2)
+
+                    
+                    
+                    TextField("Reminder Text", text: $viewModel.reminderText)
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                        .background(Color("TFBG").opacity(0.6),
+                                    in: RoundedRectangle(cornerRadius: 6, style: .continuous))
+                        .brightness(0.2)
+
+                }
+                .frame(height: viewModel.isReminderOn ? nil : 0)
+                .opacity(viewModel.isReminderOn ? 1 : 0)
+                .animation(.easeInOut, value: viewModel.isReminderOn)
 
             }
+            .animation(.easeInOut, value: viewModel.isReminderOn)
+
             .frame(maxHeight: .infinity, alignment: .top)
             .padding()
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("Add Habit")
+            
+            // MARK: Toolbar Configuration
             .toolbar {
                 ToolbarItem (placement: .navigationBarLeading) {
                     Button{
