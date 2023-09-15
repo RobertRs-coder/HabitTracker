@@ -12,7 +12,7 @@ struct AddNewHabitView: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 15) {
                 TextField("Title", text: $viewModel.title)
                     .padding(.horizontal)
                     .padding(.vertical, 10)
@@ -115,6 +115,12 @@ struct AddNewHabitView: View {
                     .background(Color("TFBG").opacity(0.6),
                                 in: RoundedRectangle(cornerRadius: 6, style: .continuous))
                     .brightness(0.2)
+                    //MARK: Change value on Tap to dismiss time selection
+                    .onTapGesture {
+                        withAnimation {
+                            viewModel.showTimePicker.toggle()
+                        }
+                    }
 
                     
                     
@@ -158,6 +164,34 @@ struct AddNewHabitView: View {
                     }
                     .tint(.white)
                     .padding([.horizontal, .top], 5)
+                }
+            }
+        }
+        //MARK: Overlay to launch TimePicker & using viewModel.showTimePicker.toogle
+        .overlay {
+            if viewModel.showTimePicker {
+                ZStack {
+                    Rectangle()
+                        .fill(.ultraThinMaterial)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation {
+                                viewModel.showTimePicker.toggle()
+                            }
+                        }
+                    
+                    DatePicker.init("", selection: $viewModel.reminderDate,
+                                    displayedComponents: [.hourAndMinute])
+                    .datePickerStyle(.wheel)
+                    .labelsHidden()
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color("TFBG"))
+                            .brightness(0.2)
+                    }
+                    .padding()
+                    
                 }
             }
         }

@@ -19,5 +19,11 @@ class HabitViewModel: ObservableObject {
     @Published var isReminderOn: Bool = false
     @Published var reminderText: String = ""
     @Published var reminderDate: Date = Date()
+    
+    
+    // MARK: Reminder Time Picker
+    
+    @Published var showTimePicker: Bool = true
+    
 
 }
