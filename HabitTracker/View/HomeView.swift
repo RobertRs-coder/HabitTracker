@@ -23,6 +23,11 @@ struct HomeView: View {
             //MARK: Add button center when habits empty
             ScrollView(habits.isEmpty ? .init() : .vertical, showsIndicators: false) {
                 VStack(spacing: 15) {
+                    
+                    ForEach(habits) { habit in
+                        HabitCardView(habit: habit)
+                    }
+                    // MARK: Add habit button
                     Button {
                         viewModel.addNewHabit.toggle()
                     } label: {
@@ -45,9 +50,59 @@ struct HomeView: View {
         .frame(maxHeight: .infinity, alignment: .top )
         .padding()
         .sheet(isPresented: $viewModel.addNewHabit) {
-            
+            //MARK: Erasing All Existing Content
+            viewModel.eraseData()
         } content: {
+            AddNewHabitView()
+                .environmentObject(viewModel)
+        }
+    }
+    
+    // MARK: Habit Card View
+    @ViewBuilder
+    func HabitCardView(habit: Habit) -> some View {
+        VStack(spacing: 6) {
+            HStack {
+                Text(habit.title ?? "")
+                    .font(.callout)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+                
+                Image("bell.badge.fill")
+                    .font(.callout)
+                    .foregroundStyle(Color(habit.color ?? "Card-1"))
+                    .scaleEffect(0.9)
+                    .opacity(habit.isReminderOn ? 1 : 0)
+                
+                Spacer()
+                
+                let count = habit.weekDays?.count ?? 0
+                Text(count == 7 ? "Everyday" : "\(count) times a week")
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+            }
+            .padding(.horizontal, 10)
             
+            // MARK: Displaying current week and amrking active dates of habit
+            let calendar = Calendar.current
+            let currentWeek = calendar.dateInterval(of: .weekOfMonth, for: Date())
+            let symbols = calendar.weekdaySymbols
+            let startDate = currentWeek?.start ?? Date()
+            let activeWeekDays = habit.weekDays ?? []
+            let activePlot = symbols.indices.compactMap { index -> (String, Date) in
+                let currentDate = calendar.date(byAdding: .day, value: index, to: startDate)
+                return (symbols[index], currentDate!)
+            }
+            
+            HStack(spacing: 0) {
+                ForEach(activePlot.indices, id: \.self) { index in
+                     let item = activePlot[index]
+                    
+                    VStack(spacing: 6) {
+                        Text(item.0)
+                    }
+                }
+            }
         }
     }
 }

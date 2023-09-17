@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddNewHabitView: View {
     @EnvironmentObject var viewModel: HabitViewModel
+    @Environment(\.self) var env
     
     var body: some View {
         NavigationStack {
@@ -149,6 +150,8 @@ struct AddNewHabitView: View {
                 ToolbarItem (placement: .navigationBarLeading) {
                     Button{
                         //Action
+                        env.dismiss()
+
                     } label: {
                         Image(systemName: "xmark.circle")
                     }
@@ -158,12 +161,19 @@ struct AddNewHabitView: View {
                 
                 ToolbarItem (placement: .navigationBarTrailing) {
                     Button{
-                        //Action
+                        //Action async problem where I managed the async calll?? Something happen
+                        Task {
+                            if try await viewModel.addNewHabit(context: env.managedObjectContext) {
+                                env.dismiss()
+                            } 
+                        }
                     } label: {
                         Image(systemName: "checkmark.circle")
                     }
                     .tint(.white)
                     .padding([.horizontal, .top], 5)
+                    .disabled(!viewModel.doneStatus())
+                    .opacity(viewModel.doneStatus() ? 1 : 0.6)
                 }
             }
         }
