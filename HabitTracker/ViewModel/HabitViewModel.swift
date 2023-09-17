@@ -25,6 +25,9 @@ class HabitViewModel: ObservableObject {
     // MARK: Reminder Time Picker
     @Published var showTimePicker: Bool = false
     
+    // MARK:  Editing habit
+    @Published var editHabit: Habit?
+    
     // MARK: Adding Habit to Database
     func addNewHabit(context: NSManagedObjectContext) async throws -> Bool {
         let habit = Habit(context: context)
@@ -64,7 +67,7 @@ class HabitViewModel: ObservableObject {
         // Scheduled Ids
         var notificationsIDs: [String] = []
         let calendar = Calendar.current
-        let weekdaySymbols: [String] = calendar.weekdaySymbols
+        let shortWeekdaySymbols: [String] = calendar.shortWeekdaySymbols
         
         //MARK: Scheduling notification
         for weekDay in weekDays {
@@ -72,7 +75,7 @@ class HabitViewModel: ObservableObject {
             let id = UUID().uuidString
             let hour = calendar.component(.hour, from: reminderDate)
             let min = calendar.component(.minute, from: reminderDate)
-            let day = weekdaySymbols.firstIndex { currentDay in
+            let day = shortWeekdaySymbols.firstIndex { currentDay in
                 return currentDay == weekDay
             } ?? -1
             // MARK: Since week day starts from 1-7
@@ -106,8 +109,34 @@ class HabitViewModel: ObservableObject {
         isReminderOn = false
         reminderDate = Date()
         reminderText = ""
+        editHabit = nil
+
         
     }
+    
+    //MARK: Deleting habit from database
+    func deleteHabit(context: NSManagedObjectContext) -> Bool {
+        if let editHabit = editHabit {
+            context.delete(editHabit)
+            if let _ = try? context.save {
+                return true
+            }
+        }
+        return false
+    }
+    
+    //MARK: Restoring edit data
+    func restoreEditData() {
+        if let editHabit = editHabit {
+            title = editHabit.title ?? ""
+            habitColor = editHabit.color ?? "Card-1"
+            weekDays = editHabit.weekDays ?? []
+            isReminderOn = editHabit.isReminderOn
+            reminderDate = editHabit.notificationDate ?? Date()
+            reminderText = editHabit.reminderText ?? ""
+        }
+    }
+    
     
     // MARK: Done Button Status
     

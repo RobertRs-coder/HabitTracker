@@ -143,22 +143,36 @@ struct AddNewHabitView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .padding()
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Add Habit")
+            .navigationTitle(viewModel.editHabit == nil ? "Edit Habit" : "Add Habit")
             
             // MARK: Toolbar Configuration
             .toolbar {
+                // MARK: Dismiss button
                 ToolbarItem (placement: .navigationBarLeading) {
                     Button{
                         //Action
                         env.dismiss()
-
                     } label: {
                         Image(systemName: "xmark.circle")
                     }
                     .tint(.white)
                     .padding([.horizontal, .top], 5)
                 }
-                
+                // MARK: Delete button
+                ToolbarItem (placement: .navigationBarLeading) {
+                    Button{
+                        //Action
+                        if viewModel.deleteHabit(context: env.managedObjectContext) {
+                            env.dismiss()
+                        }
+                    } label: {
+                        Image(systemName: "trash")
+                    }
+                    .tint(.red)
+                    .opacity(viewModel.editHabit == nil ? 0: 1)
+
+                }
+                // MARK: Done button
                 ToolbarItem (placement: .navigationBarTrailing) {
                     Button{
                         //Action async problem where I managed the async calll?? Something happen

@@ -19,7 +19,18 @@ struct HomeView: View {
             Text("Habits")
                 .font(.title2.bold())
                 .frame(maxWidth: .infinity)
-                .overlay(alignment: .trailing) {}
+                .overlay(alignment: .trailing) {
+                    Button{
+                        //Action
+                    } label: {
+                        Image(systemName: "gearshape")
+                            .font(.title3)
+                            .foregroundStyle(.white)
+                    }
+                }
+                .padding(.bottom, 10)
+            
+            
             //MARK: Add button center when habits empty
             ScrollView(habits.isEmpty ? .init() : .vertical, showsIndicators: false) {
                 VStack(spacing: 15) {
@@ -83,10 +94,10 @@ struct HomeView: View {
             }
             .padding(.horizontal, 10)
             
-            // MARK: Displaying current week and amrking active dates of habit
+            // MARK: Displaying current week and marking active dates of habit
             let calendar = Calendar.current
             let currentWeek = calendar.dateInterval(of: .weekOfMonth, for: Date())
-            let symbols = calendar.weekdaySymbols
+            let symbols = calendar.shortWeekdaySymbols
             let startDate = currentWeek?.start ?? Date()
             let activeWeekDays = habit.weekDays ?? []
             let activePlot = symbols.indices.compactMap { index -> (String, Date) in
@@ -99,11 +110,51 @@ struct HomeView: View {
                      let item = activePlot[index]
                     
                     VStack(spacing: 6) {
-                        Text(item.0)
+                        // MARK: Limiting to first 3 letters
+                        Text(item.0.prefix(3))
+                            .font(.caption)
+                            .foregroundStyle(.gray)
+                        
+                        let status = activeWeekDays.contains { day in
+                            return day == item.0
+                        }
+                        
+                        Text(getDate(date: item.1))
+                            .font(.system(size: 14))
+                            .fontWeight(.semibold)
+                            .padding(0)
+                            .background {
+                                Circle()
+                                    .fill(Color(habit.color ?? "Card-1"))
+                                    .opacity(status ? 1 : 0)
+                            }
                     }
+                    .frame(maxWidth: .infinity)
                 }
             }
+            .padding(.top, 15)
         }
+        .padding(.vertical)
+        .padding(.horizontal, 6)
+        .background {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color("TFBG").opacity(0.5))
+                .brightness(0.2)
+        }
+        .onTapGesture {
+            // MARK: Editing habit
+            viewModel.editHabit = habit
+            viewModel.restoreEditData()
+            viewModel.addNewHabit.toggle()
+        }
+    }
+    
+    // MARK: Formatting date
+    func getDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd"
+        
+        return formatter.string(from: date)
     }
 }
 
