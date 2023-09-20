@@ -62,7 +62,7 @@ struct HomeView: View {
         .padding()
         .sheet(isPresented: $viewModel.addNewHabit) {
             //MARK: Erasing All Existing Content
-            viewModel.eraseData()
+            viewModel.resetData()
         } content: {
             AddNewHabitView()
                 .environmentObject(viewModel)
@@ -79,7 +79,7 @@ struct HomeView: View {
                     .fontWeight(.semibold)
                     .lineLimit(1)
                 
-                Image("bell.badge.fill")
+                Image(systemName: "bell.badge.fill")
                     .font(.callout)
                     .foregroundStyle(Color(habit.color ?? "Card-1"))
                     .scaleEffect(0.9)
@@ -87,7 +87,7 @@ struct HomeView: View {
                 
                 Spacer()
                 
-                let count = habit.weekDays?.count ?? 0
+                let count = (habit.weekDays?.count ?? 0)
                 Text(count == 7 ? "Everyday" : "\(count) times a week")
                     .font(.caption)
                     .foregroundStyle(.gray)
@@ -110,8 +110,9 @@ struct HomeView: View {
                      let item = activePlot[index]
                     
                     VStack(spacing: 6) {
-                        // MARK: Limiting to first 3 letters
-                        Text(item.0.prefix(3))
+//                        // MARK: Limiting to first 3 letters
+//                        Text(item.0.prefix(3))
+                        Text(item.0)
                             .font(.caption)
                             .foregroundStyle(.gray)
                         
@@ -122,7 +123,7 @@ struct HomeView: View {
                         Text(getDate(date: item.1))
                             .font(.system(size: 14))
                             .fontWeight(.semibold)
-                            .padding(0)
+                            .padding(8)
                             .background {
                                 Circle()
                                     .fill(Color(habit.color ?? "Card-1"))
@@ -151,10 +152,10 @@ struct HomeView: View {
     
     // MARK: Formatting date
     func getDate(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
         
-        return formatter.string(from: date)
+        return dateFormatter.string(from: date)
     }
 }
 

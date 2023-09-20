@@ -28,9 +28,34 @@ class HabitViewModel: ObservableObject {
     // MARK:  Editing habit
     @Published var editHabit: Habit?
     
+    // MARK: Notification Access Status
+    @Published var notificationAccess: Bool = false
+    
+    init() {
+        requestNotificationAccess()
+    }
+    
+    // MARK: Requesting Access to Database
+    func requestNotificationAccess() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.sound, .alert]) { status, _ in
+            DispatchQueue.main.async {
+                self.notificationAccess = status
+            }
+        }
+    }
+    
+    
     // MARK: Adding Habit to Database
-    func addNewHabit(context: NSManagedObjectContext) async throws -> Bool {
-        let habit = Habit(context: context)
+    func addNewHabit(context: NSManagedObjectContext) async -> Bool {
+        // MARK: Editing Data
+        var habit: Habit!
+        if let editHabit = editHabit {
+             habit = editHabit
+            // Removing All Pending Notifications
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: editHabit.notificationIDs ?? [])
+        } else {
+            habit = Habit(context: context)
+        }
         habit.title = title
         habit.color = habitColor
         habit.weekDays = weekDays
@@ -80,7 +105,7 @@ class HabitViewModel: ObservableObject {
             } ?? -1
             // MARK: Since week day starts from 1-7
             // Thus adding +1 to index
-            if day ~= -1 {
+            if day != -1 {
                 var components = DateComponents()
                 components.hour = hour
                 components.minute = min
@@ -88,6 +113,8 @@ class HabitViewModel: ObservableObject {
                 
                 // MARK: Thus this will trigger notification on each selected day
                 let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+                
+//                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
                 
                 //MARK: Notification request
                 let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
@@ -101,8 +128,8 @@ class HabitViewModel: ObservableObject {
         return notificationsIDs
     }
     
-    // MARK: fun Reset Data
-    func eraseData() {
+    // MARK: Erasing Content
+    func resetData() {
         title = ""
         habitColor = "Card-1"
         weekDays = []
@@ -110,15 +137,17 @@ class HabitViewModel: ObservableObject {
         reminderDate = Date()
         reminderText = ""
         editHabit = nil
-
-        
     }
     
     //MARK: Deleting habit from database
     func deleteHabit(context: NSManagedObjectContext) -> Bool {
         if let editHabit = editHabit {
+            if editHabit.isReminderOn {
+                // Removing All Pending Notifications
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: editHabit.notificationIDs ?? [])
+            }
             context.delete(editHabit)
-            if let _ = try? context.save {
+            if let _ = try? context.save() {
                 return true
             }
         }

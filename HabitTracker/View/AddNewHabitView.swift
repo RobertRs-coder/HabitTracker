@@ -86,6 +86,7 @@ struct AddNewHabitView: View {
                     .padding(.vertical, 10)
                 
                 //MARK: Reminder with toogle
+                // Hidding if notification acess is rejected
                 HStack {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Reminder")
@@ -103,6 +104,7 @@ struct AddNewHabitView: View {
                     .labelsHidden()
                     
                 }
+                .opacity(viewModel.notificationAccess ? 1 : 0)
                 
                 //MARK: Reminders
                 HStack(spacing: 12) {
@@ -123,8 +125,6 @@ struct AddNewHabitView: View {
                         }
                     }
 
-                    
-                    
                     TextField("Reminder Text", text: $viewModel.reminderText)
                         .padding(.horizontal)
                         .padding(.vertical, 10)
@@ -134,8 +134,10 @@ struct AddNewHabitView: View {
 
                 }
                 .frame(height: viewModel.isReminderOn ? nil : 0)
+//                .animation(.easeInOut, value: viewModel.isReminderOn) //Why?
                 .opacity(viewModel.isReminderOn ? 1 : 0)
-                .animation(.easeInOut, value: viewModel.isReminderOn)
+                .opacity(viewModel.notificationAccess ? 1 : 0)
+
 
             }
             .animation(.easeInOut, value: viewModel.isReminderOn)
@@ -143,7 +145,7 @@ struct AddNewHabitView: View {
             .frame(maxHeight: .infinity, alignment: .top)
             .padding()
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(viewModel.editHabit == nil ? "Edit Habit" : "Add Habit")
+            .navigationTitle(viewModel.editHabit != nil ? "Edit Habit" : "Add Habit")
             
             // MARK: Toolbar Configuration
             .toolbar {
@@ -175,9 +177,8 @@ struct AddNewHabitView: View {
                 // MARK: Done button
                 ToolbarItem (placement: .navigationBarTrailing) {
                     Button{
-                        //Action async problem where I managed the async calll?? Something happen
                         Task {
-                            if try await viewModel.addNewHabit(context: env.managedObjectContext) {
+                            if await viewModel.addNewHabit(context: env.managedObjectContext) {
                                 env.dismiss()
                             } 
                         }
